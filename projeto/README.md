@@ -29,3 +29,4 @@ O sistema pode ser subdividido em dois subsistemas: um para gestão de pedidos e
 ![Diagrama de Classes](./digrama_classes.png)
 
 ### Diagrama de Pacotes (Visão Lógica)
+![Diagrama de Pacotes](./diagrama_pacotes.png)
