@@ -20,7 +20,7 @@ O sistema pode ser subdividido em dois subsistemas: um para gestão de pedidos e
 # Artefatos do projeto
 
 ### Diagrama de Caso de Uso
-![Diagrama de Caso de Uso](./casos_de_uso.jpg)
+![Diagrama de Caso de Uso](./casos_de_uso.png)
 
 ### Histórias de Usuário
 [Acesse](./historias_usuario.md)
