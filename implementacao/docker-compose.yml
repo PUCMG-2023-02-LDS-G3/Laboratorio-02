@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb
+    container_name: db
+    restart: always
+    tty: true
+    environment:
+      MARIADB_ROOT_PASSWORD: R3RO1s6dZ668i7tT
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql

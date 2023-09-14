@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/laboratorio2?createDatabaseIfNotExist=true
+    driver-class-name: org.mariadb.jdbc.Driver
+
+    username: root
+    password: R3RO1s6dZ668i7tT
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
