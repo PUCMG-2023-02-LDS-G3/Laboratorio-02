@@ -10,11 +10,7 @@ import org.springframework.stereotype.Service;
 public class AgenteService {
     AgenteRepository agenteRepository;
 
-    public Agente criarAgente(String cnpj) {
-        Agente agente = new Agente();
-        agente.setCnpj(cnpj);
-        agente.setNome("Vitão");
-        agente.setEndereco("rua sei la das quantas");
+    public Agente criarAgente(Agente agente) {
         return agenteRepository.save(agente);
     }
 }

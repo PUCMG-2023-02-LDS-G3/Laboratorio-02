@@ -3,9 +3,7 @@ package com.laboratorio.projeto.controller;
 import com.laboratorio.projeto.domain.Agente;
 import com.laboratorio.projeto.service.AgenteService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("agente")
@@ -13,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AgenteController {
     private final AgenteService agenteService;
 
-    @GetMapping()
-    public Agente exemploRota() {
-        return agenteService.criarAgente("123.123.123-00");
+    @PostMapping()
+    public Agente cadastroAgente(@RequestBody Agente agente) {
+        return agenteService.criarAgente(agente);
     }
 }
