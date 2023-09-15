@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("agente")
+@RequestMapping("/agente")
 @AllArgsConstructor
 public class AgenteController {
     private final AgenteService agenteService;
