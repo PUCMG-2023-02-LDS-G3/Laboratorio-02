@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class AgenteController {
     private final AgenteService agenteService;
 
-    @PostMapping()
+    @PostMapping
     public Agente cadastroAgente(@RequestBody Agente agente) {
         return agenteService.criarAgente(agente);
     }

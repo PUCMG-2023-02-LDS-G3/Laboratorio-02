@@ -25,4 +25,9 @@ public class UsuarioController {
     public boolean deleteUsuario(@PathVariable String cpf) {
         return usuarioService.deleteUsuario(cpf);
     }
+
+    @PutMapping
+    public Usuario updateUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.updateUsuario(usuario);
+    }
 }

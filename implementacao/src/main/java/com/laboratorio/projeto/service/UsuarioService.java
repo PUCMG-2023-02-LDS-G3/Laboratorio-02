@@ -27,4 +27,8 @@ public class UsuarioService {
         }
         return true;
     }
+
+    public Usuario updateUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
 }
