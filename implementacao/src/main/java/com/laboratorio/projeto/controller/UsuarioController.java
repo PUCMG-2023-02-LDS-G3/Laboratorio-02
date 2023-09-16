@@ -17,7 +17,12 @@ public class UsuarioController {
     }
 
     @PostMapping
-    private Usuario createUsuario(@RequestBody Usuario usuario) {
+    public Usuario createUsuario(@RequestBody Usuario usuario) {
         return usuarioService.createUsuario(usuario);
+    }
+
+    @DeleteMapping("/{cpf}")
+    public boolean deleteUsuario(@PathVariable String cpf) {
+        return usuarioService.deleteUsuario(cpf);
     }
 }

@@ -17,4 +17,14 @@ public class UsuarioService {
     public Usuario createUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
+
+    public boolean deleteUsuario(String cpf) {
+        Usuario usuario = usuarioRepository.getUsuarioByCpf(cpf);
+        try {
+            usuarioRepository.delete(usuario);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }
