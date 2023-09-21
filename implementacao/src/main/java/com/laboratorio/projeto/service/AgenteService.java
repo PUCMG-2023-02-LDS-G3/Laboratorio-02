@@ -1,7 +1,8 @@
 package com.laboratorio.projeto.service;
 
-import com.laboratorio.projeto.domain.Agente;
 import com.laboratorio.projeto.repository.AgenteRepository;
+import com.laboratorio.projeto.repository.domain.Agente;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

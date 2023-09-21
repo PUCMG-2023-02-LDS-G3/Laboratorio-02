@@ -1,7 +1,8 @@
 package com.laboratorio.projeto.controller;
 
-import com.laboratorio.projeto.domain.Usuario;
+import com.laboratorio.projeto.repository.domain.Usuario;
 import com.laboratorio.projeto.service.UsuarioService;
+
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

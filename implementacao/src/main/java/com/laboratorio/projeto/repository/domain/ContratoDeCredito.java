@@ -1,4 +1,4 @@
-package com.laboratorio.projeto.domain;
+package com.laboratorio.projeto.repository.domain;
 
 import lombok.Data;
 
