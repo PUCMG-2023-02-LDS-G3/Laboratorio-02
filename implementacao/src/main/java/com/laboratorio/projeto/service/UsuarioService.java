@@ -1,7 +1,8 @@
 package com.laboratorio.projeto.service;
 
-import com.laboratorio.projeto.domain.Usuario;
 import com.laboratorio.projeto.repository.UsuarioRepository;
+import com.laboratorio.projeto.repository.domain.Usuario;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

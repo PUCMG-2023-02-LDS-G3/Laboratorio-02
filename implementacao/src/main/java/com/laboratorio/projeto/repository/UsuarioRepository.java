@@ -1,7 +1,8 @@
 package com.laboratorio.projeto.repository;
 
-import com.laboratorio.projeto.domain.Usuario;
 import org.springframework.data.repository.CrudRepository;
+
+import com.laboratorio.projeto.repository.domain.Usuario;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, String> {
     public Usuario getUsuarioByCpf(String cpf);
