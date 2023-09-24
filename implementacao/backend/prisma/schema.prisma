@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id           String     @id @default(uuid())
+  nome         String
+  cpf          String     @unique
+  rg           String     @unique
+  endereco     String
+  profissao    String
+  empregadoras String
+  salario      Float
+  pedido       Pedido[]
+  contrato     Contrato[]
+  senha        String
+}
+
+model Automovel {
+  id           String     @id @default(uuid())
+  matricula    String     @unique
+  modelo       String
+  marca        String
+  ano          Int
+  placa        String     @unique
+  aluguel      Float
+  proprietario String
+  cnpj         String?
+  Contrato     Contrato[]
+  Pedido       Pedido[]
+  Agente       Agente?    @relation(fields: [cnpj], references: [id])
+}
+
+model Agente {
+  id                String              @id @default(uuid())
+  nome              String
+  cnpj              String              @unique
+  endereco          String
+  senha             String
+  pedido            Pedido[]
+  automoveis        Automovel[]
+  contrato          Contrato[]
+  ContratoDeCredito ContratoDeCredito[]
+}
+
+model Pedido {
+  id                String             @id @default(uuid())
+  data              DateTime           @default(now())
+  cpf               String
+  aprovado          Boolean            @default(false)
+  matricula         String
+  cnpj              String?
+  credito           String?
+  automovel         Automovel?         @relation(fields: [matricula], references: [id])
+  Agente            Agente?            @relation(fields: [cnpj], references: [id])
+  contratoDeCredito ContratoDeCredito? @relation(fields: [credito], references: [id])
+  user              Usuario            @relation(fields: [cpf], references: [id])
+}
+
+model Contrato {
+  id                String            @id @default(uuid())
+  dataInicio        DateTime          @default(now())
+  dataFim           DateTime
+  cpf               String
+  cnpj              String
+  matricula         String
+  creditoId         String
+  user              Usuario           @relation(fields: [cpf], references: [id])
+  agente            Agente            @relation(fields: [cnpj], references: [id])
+  automovel         Automovel         @relation(fields: [matricula], references: [id])
+  contratoDeCredito ContratoDeCredito @relation(fields: [creditoId], references: [id])
+}
+
+model ContratoDeCredito {
+  id            String     @id @default(uuid())
+  cnpj          String
+  valorContrato Float
+  Pedido        Pedido[]
+  Contrato      Contrato[]
+  agente        Agente     @relation(fields: [cnpj], references: [id])
+}
