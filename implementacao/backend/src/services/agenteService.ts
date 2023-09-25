@@ -48,6 +48,26 @@ class AgenteService {
         })
     }
 
+    async refusePedido(cnpj: string, pedido: Pedido) {
+        return await this.db.agente.update({
+            where: {
+                cnpj
+            },
+            data: {
+                pedido: {
+                    update: {
+                        where: {
+                            id: pedido.id
+                        },
+                        data: {
+                            aprovado: false
+                        }
+                    }
+                }
+            }
+        })
+    }
+
 }
 
 export default AgenteService;
