@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Center,
+  HStack,
   Heading,
   Input,
   Text,
@@ -14,9 +15,11 @@ import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import useUser from "../../hooks/useUser"
+import api from "../../Utils/api"
+import { useState } from "react"
 
 const schema = yup.object().shape({
-  email: yup.string().required("Email obrigatório").email("Email inválido"),
+  email: yup.string().required("Obrigatório"),
   password: yup
     .string()
     .required("Senha obrigatória")
@@ -31,14 +34,37 @@ function LoginPage() {
   } = useForm({ resolver: yupResolver(schema) })
 
   const { SingIn } = useUser()
+  const [userType, setUserType] = useState<"cliente" | "agente">("cliente")
+
+  const handleChangeUserType = (type: "cliente" | "agente") => {
+    setUserType(type)
+  }
 
   const navigate = useNavigate()
 
   const onSubmit = (data: any) => {
-    console.log(data)
 
-    SingIn(data.email, data.password)
-    navigate("/app/home")
+    try {
+      if (userType === "cliente") {
+        api.post("/usuario/login", {
+          cpf: data.email,
+          senha: data.password,
+        })
+      } else {
+        api.post("/agente/login", {
+          cnpj: data.email,
+          senha: data.password,
+        })
+      }
+
+      if(SingIn(data.email, data.password, userType === "cliente")) {
+        navigate("/app/home")
+      } else {
+        alert("Credenciais inválidas")
+      }
+    } catch (error) {
+      alert(error)
+    }
   }
 
   return (
@@ -52,15 +78,27 @@ function LoginPage() {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack gap={"8"}>
-              <VStack align={"start"}>
-                <Box>
-                  <Text>Email</Text>
-                  <Input {...register("email")} />
-                </Box>
-                {errors.email && (
-                  <Text color={"red.600"}>{errors.email.message}</Text>
-                )}
-              </VStack>
+              {userType === "cliente" ? (
+                <VStack align={"start"}>
+                  <Box>
+                    <Text>CPF</Text>
+                    <Input {...register("email")} />
+                  </Box>
+                  {errors.email && (
+                    <Text color={"red.600"}>{errors.email.message}</Text>
+                  )}
+                </VStack>
+              ) : (
+                <VStack align={"start"}>
+                  <Box>
+                    <Text>CNPJ</Text>
+                    <Input {...register("email")} />
+                  </Box>
+                  {errors.email && (
+                    <Text color={"red.600"}>{errors.email.message}</Text>
+                  )}
+                </VStack>
+              )}
 
               <VStack align={"start"}>
                 <Box>
@@ -77,6 +115,21 @@ function LoginPage() {
               </Button>
             </VStack>
           </form>
+
+          <Box>
+            <Text>Entrar como</Text>
+            <HStack gap={"4"}>
+              {["cliente", "agente"].map((type) => (
+                <Button
+                  key={type}
+                  onClick={() => handleChangeUserType(type as any)}
+                  colorScheme={userType === type ? "facebook" : "gray"}>
+                  {String(type).toLocaleUpperCase()}
+                </Button>
+              ))}
+            </HStack>
+          </Box>
+
           <Text>
             Não possui uma conta?
             <Link to={"/singup"}>Crie uma conta</Link>
