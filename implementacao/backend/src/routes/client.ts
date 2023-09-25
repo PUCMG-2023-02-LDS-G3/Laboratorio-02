@@ -11,30 +11,25 @@ route.get("/", async (req: Request, res: Response) => {
   return res.json(clients);
 });
 
+route.post("/login", async (req: Request, res: Response) => {
+  const { cpf, senha } = req.body;
+  const client = await clientService.getUsuario(cpf);
+
+  if (!client || client.senha !== senha) {
+    return res.status(400).json({ error: "Senha invalida" });
+  }
+  return res.json(client);
+})
+
 route.post("/create/pedido", async (req: Request, res: Response) => {
   const { cpf, pedido } = req.body;
-  console.log(pedido)
   const client = await clientService.addPedido(cpf, pedido);
   return res.json(client);
 });
 
 route.post("/create", async (req: Request, res: Response) => {
-  const { nome, cpf, senha, endereco, rg, salario, profissao, id, empresa } =
+  const { cpf, senha } =
     req.body;
-
-  if (
-    !nome ||
-    !cpf ||
-    !senha ||
-    !endereco ||
-    !rg ||
-    !salario ||
-    !profissao ||
-    !id ||
-    !empresa
-  ) {
-    return res.status(400).json({ error: "Invalid body" });
-  }
 
   const clientExists = await clientService.getUsuario(cpf);
 
@@ -44,16 +39,18 @@ route.post("/create", async (req: Request, res: Response) => {
 
   const client = await clientService.createUsuario({
     cpf,
-    empregadoras: empresa,
-    endereco,
-    nome,
-    profissao,
-    rg,
-    salario,
+    empregadoras: "empresa",
+    endereco: "",
+    nome: "",
+    profissao: "",
+    rg: "",
+    salario: 0,
     senha,
-    id,
+    id: "",
   });
   return res.json(client);
 });
+
+
 
 export default route;

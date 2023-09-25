@@ -13,14 +13,24 @@ route.get("/", async (req: Request, res: Response) => {
   return res.json(agents);
 });
 
+route.post("/login", async (req: Request, res: Response) => {
+  const { cnpj, senha } = req.body;
+  const agent = await agenteService.getAgente(cnpj);
+
+  if (!agent || agent.senha !== senha) {
+    return res.status(400).json({ error: "Senha invalida" });
+  }
+  return res.json(agent);
+})
+
 route.post("/create", async (req: Request, res: Response) => {
   const { nome, cnpj, senha, endereco, id } = req.body;
   const agents = await agenteService.createAgente({
-    nome,
+    nome: "",
     cnpj,
     senha,
-    endereco,
-    id,
+    endereco: "",
+    id: "",
   });
   return res.json(agents);
 });
@@ -50,5 +60,18 @@ route.post("/create/automovel", async (req: Request, res: Response) => {
   });
   return res.json(agents);
 });
+
+
+route.put("/accept/pedido", async (req: Request, res: Response) => {
+  const { cnpj, pedido } = req.body;
+  const agents = await agenteService.acceptPedido(cnpj, pedido);
+  return res.json(agents);
+})
+
+route.put("/refuse/pedido", async (req: Request, res: Response) => {
+  const { cnpj, pedido } = req.body;
+  const agents = await agenteService.refusePedido(cnpj, pedido);
+  return res.json(agents);
+})
 
 export default route;
